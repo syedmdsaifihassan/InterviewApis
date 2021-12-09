@@ -173,7 +173,7 @@ exports.deleteMeeting = (req, res) => {
 
     con.query(sql, function (err, result) {
         if(result){
-            // console.log("Deleted!");
+            // console.log("Deleted!", result);
             obj={status: true};
             res.status(200).send(obj);
         }else{
