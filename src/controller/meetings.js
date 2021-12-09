@@ -16,7 +16,7 @@ con.connect(function(err) {
 exports.addMeeting = (req, res) => {
     console.log(req)
     var meet_id=-1;
-    var sql = `INSERT INTO interview_meetings (subject, start_time,end_time) VALUES ('${req.body.agenda}', '${req.body.start_time}','${req.body.end_time}')`;
+    var sql = `INSERT INTO interview_meetings (subject,start_time,end_time) VALUES ('${req.body.agenda}', '${req.body.start_time}','${req.body.end_time}')`;
     con.query(sql, function (err, result) {
         console.log(result)
         if (err){
@@ -59,4 +59,71 @@ exports.allMeeting = (req, res) => {
         res.status(200).send(result);
     });
   
+};
+
+exports.scheduleMeeting = (req, res) => {
+  
+    var table1 = "SELECT * FROM interview_users";
+    var table2 = "SELECT * FROM interviews_schedule";
+    var table3 = "SELECT * FROM interview_meetings";
+
+    con.query(table1, function (err, result) {
+        if (err){
+            console.log('unable to get user details')
+        };
+        res.status(200).send(result);
+    });
+
+    con.query(table2, function (err, result) {
+        if (err){
+            console.log('unable to get scheduled')
+        };
+        res.status(200).send(result);
+    });
+
+    con.query(table3, function (err, result) {
+        if (err){
+            console.log('unable to get meetings')
+        };
+        res.status(200).send(result);
+    });
+  
+};
+
+exports.updateMeeting = (req, res) => {
+
+    var start_time = req.body.start_time;
+    var end_time = req.body.end_time;
+    var subject = req.body.agenda;
+    var meet_id = req.body.meet_id;
+  
+    var sql = `UPDATE interview_meetings SET start_time = "${start_time}", end_time = "${end_time}", subject = "${subject}" WHERE meet_id ="${meet_id}"`;
+
+    con.query(sql, function (err, result) {
+        try{
+            if(result){
+                console.log("Updated!");
+                res.status(200).send(result);
+            }else{
+                // console.log("Updation Problem!");
+                res.status(400).send('Updation Problem!');
+            }
+        }catch(err){
+            console.log(err);
+        }
+    });
+
+};
+
+exports.deleteMeeting = (req, res) => {
+  
+    var meet_id = req.body.meet_id;
+    var sql = `DELETE FROM interview_meetings WHERE meet_id="${meet_id}"`;
+    // var sql = "DELETE FROM interview_meetings WHERE meet_id=:meet_id";
+
+    con.query(sql, function (err, result) {
+        console.log("Deleted!");
+        res.status(200).send(result);
+    });
+
 };
