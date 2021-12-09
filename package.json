@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "web": "npm start" ,
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",

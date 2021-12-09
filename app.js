@@ -13,7 +13,7 @@ const app = express();
 
 const HTTP_SERVER = process.env.PORT || 8080;
 app.listen(HTTP_SERVER, () => {
-  console.log(`server listening on port ${HTTP_SERVER}!`);
+  // console.log(`server listening on port ${HTTP_SERVER}!`);
 });
 
 // Session
