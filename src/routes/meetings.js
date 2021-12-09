@@ -7,7 +7,7 @@ router.post("/addMeeting", addMeeting);
 router.get("/allMeeting", allMeeting);
 router.get("/scheduleMeeting", scheduleMeeting);
 router.post("/updateMeeting", updateMeeting);
-router.delete("/deleteMeeting", deleteMeeting);
+router.post("/deleteMeeting", deleteMeeting);
 router.get("/users", users);
 
 module.exports = router;
