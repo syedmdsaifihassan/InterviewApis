@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
 
-const meetings = require("../routes/meetings");
+const meetings = require("./src/routes/meetings");
 
 // Start Express
 const app = express();
