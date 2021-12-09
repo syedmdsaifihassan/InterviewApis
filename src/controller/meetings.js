@@ -9,26 +9,26 @@ var con = mysql.createConnection({
   
 con.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    // console.log("Connected!");
 });
 
 
 exports.addMeeting = (req, res) => {
-    console.log(req)
+    // console.log(req)
     var meet_id=-1;
     var sql = `INSERT INTO interview_meetings (subject,start_time,end_time) VALUES ('${req.body.agenda}', '${req.body.start_time}','${req.body.end_time}')`;
     con.query(sql, function (err, result) {
-        console.log(result)
+        // console.log(result)
         if (err){
-            console.log('error adding interview meeting');
+            // console.log('error adding interview meeting');
             res.status(400).send('error creating meeting')
         }
-        console.log("added interview meeting")
+        // console.log("added interview meeting")
     });
   
     con.query("SELECT meet_id FROM interview_meetings WHERE meet_id = ( SELECT MAX(meet_id) FROM interview_meetings )", function (err, result, fields) {
         if (err){
-            console.log('unable to get meet_id')
+            // console.log('unable to get meet_id')
         };
         meet_id=result[0].meet_id;
 
@@ -38,10 +38,10 @@ exports.addMeeting = (req, res) => {
             var sql = `INSERT INTO interviews_schedule (user_id, meet_id) VALUES ('${user_id}', '${meet_id}')`;
             con.query(sql, function (err, result) {
                 if (err){
-                    console.log('error creating meeting');
+                    // console.log('error creating meeting');
                     res.status(400).send('error creating meeting')
                 }
-            console.log("Meeting Created Successfully")
+            // console.log("Meeting Created Successfully")
             }); 
         });
     });
@@ -54,7 +54,7 @@ exports.allMeeting = (req, res) => {
     var sql = "SELECT * FROM interview_meetings";
     con.query(sql, function (err, result) {
         if (err){
-            console.log('unable to get meetings')
+            // console.log('unable to get meetings')
         };
         res.status(200).send(result);
     });
@@ -69,21 +69,21 @@ exports.scheduleMeeting = (req, res) => {
 
     con.query(table1, function (err, result) {
         if (err){
-            console.log('unable to get user details')
+            // console.log('unable to get user details')
         };
         res.status(200).send(result);
     });
 
     con.query(table2, function (err, result) {
         if (err){
-            console.log('unable to get scheduled')
+            // console.log('unable to get scheduled')
         };
         res.status(200).send(result);
     });
 
     con.query(table3, function (err, result) {
         if (err){
-            console.log('unable to get meetings')
+            // console.log('unable to get meetings')
         };
         res.status(200).send(result);
     });
@@ -102,14 +102,14 @@ exports.updateMeeting = (req, res) => {
     con.query(sql, function (err, result) {
         try{
             if(result){
-                console.log("Updated!");
+                // console.log("Updated!");
                 res.status(200).send(result);
             }else{
                 // console.log("Updation Problem!");
                 res.status(400).send('Updation Problem!');
             }
         }catch(err){
-            console.log(err);
+            // console.log(err);
         }
     });
 
@@ -122,7 +122,18 @@ exports.deleteMeeting = (req, res) => {
     // var sql = "DELETE FROM interview_meetings WHERE meet_id=:meet_id";
 
     con.query(sql, function (err, result) {
-        console.log("Deleted!");
+        // console.log("Deleted!");
+        res.status(200).send(result);
+    });
+
+};
+
+exports.users = (req, res) => {
+
+    var sql = `SELECT * FROM interview_users`;
+
+    con.query(sql, function (err, result) {
+        // console.log("Sent!");
         res.status(200).send(result);
     });
 
